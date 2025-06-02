@@ -8,21 +8,23 @@
 #include "clsRandomScreen.h"
 #include "clsScreen.h"
 #include "enShowsOptions.h"
+#include "clsDeleteScreen.h"
 
 using namespace std;
 
 class clsSubScreen : protected clsScreen {
    private:
-    enum enAnimeMainMenuOptions {
+    enum enSubMenuOptions {
         List = 1,
         Random = 2,
         AddNew = 3,
-        Exit = 4
+        Delete = 4,
+        Exit = 5
     };
 
     static short _ReadSubMenuOption() {
-        cout << setw(37) << left << "" << "Choose what do you want to do? [1 to 4]? ";
-        short Choice = clsInputValidate::ReadShortNumberBetween(1, 4, "Enter Number between 1 to 4? ");
+        cout << setw(37) << left << "" << "Choose what do you want to do? [1 to 5]? ";
+        short Choice = clsInputValidate::ReadShortNumberBetween(1, 5, "Enter Number between 1 to 5? ");
         return Choice;
     }
 
@@ -45,31 +47,37 @@ class clsSubScreen : protected clsScreen {
         clsAddNewScreen::ShowAddNewShowScreen(ShowsTypeOption);
     }
 
-    static void _ShowMainMenu() {
+    static void _ShowDeleteScreen(enShowsOptions ShowsTypeOption) {
+        clsDeleteScreen::ShowDeleteShowScreen(ShowsTypeOption);
     }
 
-    static void _PerformSubMenuOption(enAnimeMainMenuOptions MainMenuOption, enShowsOptions ShowsTypeOption) {
+    static void _PerformSubMenuOption(enSubMenuOptions MainMenuOption, enShowsOptions ShowsTypeOption) {
         switch (MainMenuOption) {
-            case enAnimeMainMenuOptions::List: {
+            case enSubMenuOptions::List: {
                 system("cls");
                 _ShowListScreen(ShowsTypeOption);
                 _GoBackToSubMenu(ShowsTypeOption);
                 break;
             }
 
-            case enAnimeMainMenuOptions::Random:
+            case enSubMenuOptions::Random:
                 system("cls");
                 _ShowRandomShowScreen(ShowsTypeOption);
                 _GoBackToSubMenu(ShowsTypeOption);
                 break;
 
-            case enAnimeMainMenuOptions::AddNew:
+            case enSubMenuOptions::AddNew:
                 system("cls");
                 _ShowAddNewScreen(ShowsTypeOption);
                 _GoBackToSubMenu(ShowsTypeOption);
                 break;
+                
+                case enSubMenuOptions::Delete:
+                system("cls");
+                _ShowDeleteScreen(ShowsTypeOption);
+                _GoBackToSubMenu(ShowsTypeOption);
 
-            case enAnimeMainMenuOptions::Exit:
+            case enSubMenuOptions::Exit:
                 break;
         }
     }
@@ -81,8 +89,9 @@ class clsSubScreen : protected clsScreen {
         cout << setw(37) << left << "" << "===========================================\n\n";
         cout << setw(37) << left << "" << "\t[1] Show Animes List.\n\n";
         cout << setw(37) << left << "" << "\t[2] Get Random Anime.\n\n";
-        cout << setw(37) << left << "" << "\t[3] Add New Anime.\n\n\n";
-        cout << setw(37) << left << "" << "\t[4] Exit.\n\n";
+        cout << setw(37) << left << "" << "\t[3] Add New Anime.\n\n";
+        cout << setw(37) << left << "" << "\t[4] Delete an Anime.\n\n\n";
+        cout << setw(37) << left << "" << "\t[5] Exit.\n\n";
         cout << setw(37) << left << "" << "===========================================\n";
     }
 
@@ -93,8 +102,9 @@ class clsSubScreen : protected clsScreen {
         cout << setw(37) << left << "" << "===========================================\n\n";
         cout << setw(37) << left << "" << "\t[1] Show Movies List.\n\n";
         cout << setw(37) << left << "" << "\t[2] Get Random Movie.\n\n";
-        cout << setw(37) << left << "" << "\t[3] Add New Movie.\n\n\n";
-        cout << setw(37) << left << "" << "\t[4] Exit.\n\n";
+        cout << setw(37) << left << "" << "\t[3] Add New Movie.\n\n";
+        cout << setw(37) << left << "" << "\t[4] Delete a Movie.\n\n\n";
+        cout << setw(37) << left << "" << "\t[5] Exit.\n\n";
         cout << setw(37) << left << "" << "===========================================\n";
     }
 
@@ -105,8 +115,9 @@ class clsSubScreen : protected clsScreen {
         cout << setw(37) << left << "" << "===========================================\n\n";
         cout << setw(37) << left << "" << "\t[1] Show Series List.\n\n";
         cout << setw(37) << left << "" << "\t[2] Get Random Series.\n\n";
-        cout << setw(37) << left << "" << "\t[3] Add New Series.\n\n\n";
-        cout << setw(37) << left << "" << "\t[4] Exit.\n\n";
+        cout << setw(37) << left << "" << "\t[3] Add New Series.\n\n";
+        cout << setw(37) << left << "" << "\t[4] Delete a Series.\n\n\n";
+        cout << setw(37) << left << "" << "\t[5] Exit.\n\n";
         cout << setw(37) << left << "" << "===========================================\n";
     }
 
@@ -124,6 +135,6 @@ class clsSubScreen : protected clsScreen {
                 break;
         }
 
-        _PerformSubMenuOption((enAnimeMainMenuOptions)_ReadSubMenuOption(), CurrentShowType);
+        _PerformSubMenuOption((enSubMenuOptions)_ReadSubMenuOption(), CurrentShowType);
     }
 };
